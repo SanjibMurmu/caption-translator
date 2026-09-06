@@ -1,0 +1,36 @@
+name: Package and Release Extension
+
+on:
+  push:
+    tags:
+      - "v*" 
+permissions:
+  contents: write 
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Create extension zip
+        run: |
+          # Bundle only production files, excluding test files, git, and local configs
+          zip -r caption-translator-${{ github.ref_name }}.zip \
+            manifest.json \
+            background.js \
+            content.js \
+            popup.html \
+            popup.js \
+            vtt-parser.js \
+            captions/ \
+            icons/
+
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: caption-translator-${{ github.ref_name }}.zip
+          generate_release_notes: true
+          draft: false
+          prerelease: false
