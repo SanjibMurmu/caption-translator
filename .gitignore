@@ -1,0 +1,14 @@
+# Ignore OS and editor metadata
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Ignore local build artifacts
+*.zip
+*.crx
+*.pem
+
+# Ignore secrets or local test environments
+.env
+config.local.json

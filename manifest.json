@@ -1,0 +1,38 @@
+{
+  "manifest_version": 3,
+  "name": "Live Caption Translator",
+  "version": "0.2.0",
+  "description": "Translates live video captions using Azure AI Translator.",
+  "permissions": ["storage"],
+  "host_permissions": [
+    "https://api.cognitive.microsofttranslator.com/*",
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": [
+        "vtt-parser.js",
+        "captions/common.js",
+        "captions/extractor-native-track.js",
+        "captions/extractor-vtt-fetch.js",
+        "captions/extractor-dom.js",
+        "captions/router.js",
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Caption Translator"
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}
